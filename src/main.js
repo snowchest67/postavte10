@@ -1,14 +1,14 @@
 import { ComponentFactory } from './utils/componentFactory.js'
+import { Router } from './utils/router.js'
 import { createBreadcrumbs } from './components/breadcrumbs.js'
 import { createUsersComponent } from './components/users.js'
 import { createTodosComponent } from './components/todos.js'
 import { createPostsComponent } from './components/posts.js'
 import { createCommentsComponent } from './components/comments.js'
-import { createUserForm } from './components/userForm.js'
 
 class SPAApplication {
 	constructor() {
-		this.router = ComponentFactory.createRouter()
+		this.router = new Router()
 		this.init()
 	}
 
@@ -19,24 +19,10 @@ class SPAApplication {
 	}
 
 	setupRoutes() {
-		this.router.addRoute('#users', () => {
-			const container = ComponentFactory.createElement('div')
-			container.appendChild(createUserForm())
-			container.appendChild(createUsersComponent())
-			return container
-		})
-
-		this.router.addRoute('#users#todos', () => {
-			return createTodosComponent()
-		})
-
-		this.router.addRoute('#users#posts', () => {
-			return createPostsComponent()
-		})
-
-		this.router.addRoute('#users#posts#comments', () => {
-			return createCommentsComponent()
-		})
+		this.router.addRoute('users', createUsersComponent)
+		this.router.addRoute('todos', createTodosComponent)
+		this.router.addRoute('posts', createPostsComponent)
+		this.router.addRoute('comments', createCommentsComponent)
 	}
 
 	renderLayout() {
@@ -56,10 +42,6 @@ class SPAApplication {
 			{
 				href: '#users',
 				className: 'nav-link',
-				onClick: e => {
-					e.preventDefault()
-					this.router.navigate('#users')
-				},
 			},
 			'Пользователи'
 		)
@@ -67,12 +49,8 @@ class SPAApplication {
 		const todosLink = ComponentFactory.createElement(
 			'a',
 			{
-				href: '#users#todos',
+				href: '#todos',
 				className: 'nav-link',
-				onClick: e => {
-					e.preventDefault()
-					this.router.navigate('#users#todos')
-				},
 			},
 			'Задачи'
 		)
@@ -80,12 +58,8 @@ class SPAApplication {
 		const postsLink = ComponentFactory.createElement(
 			'a',
 			{
-				href: '#users#posts',
+				href: '#posts',
 				className: 'nav-link',
-				onClick: e => {
-					e.preventDefault()
-					this.router.navigate('#users#posts')
-				},
 			},
 			'Посты'
 		)
@@ -93,12 +67,8 @@ class SPAApplication {
 		const commentsLink = ComponentFactory.createElement(
 			'a',
 			{
-				href: '#users#posts#comments',
+				href: '#comments',
 				className: 'nav-link',
-				onClick: e => {
-					e.preventDefault()
-					this.router.navigate('#users#posts#comments')
-				},
 			},
 			'Комментарии'
 		)

@@ -13,7 +13,9 @@ export class Router {
 	}
 
 	parseRoute(route) {
-		const [path, query] = route.split('?')
+		const parts = route.split('#').filter(part => part)
+		const lastPart = parts[parts.length - 1] || ''
+		const [path, query] = lastPart.split('?')
 		const params = {}
 
 		if (query) {
@@ -23,7 +25,7 @@ export class Router {
 			})
 		}
 
-		return { path, params }
+		return { path: parts.join('#'), params, parts }
 	}
 
 	addRoute(path, component) {
@@ -39,15 +41,17 @@ export class Router {
 			this.outlet = document.getElementById('router-outlet')
 		}
 
-		const { path, params } = this.parseRoute(this.currentRoute)
+		const { path, params, parts } = this.parseRoute(this.currentRoute)
 		const component = this.routes[path]
 
 		if (component && this.outlet) {
 			this.outlet.innerHTML = ''
-			const componentElement = await component(params)
+			const componentElement = await component(params, parts)
 			if (componentElement) {
 				this.outlet.appendChild(componentElement)
 			}
+		} else {
+			this.navigate('users')
 		}
 	}
 

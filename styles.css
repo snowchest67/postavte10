@@ -295,3 +295,40 @@ body {
 .submit-button:hover {
 	background: #0056b3;
 }
+
+.no-data {
+	text-align: center;
+	color: #666;
+	font-style: italic;
+	padding: 40px;
+}
+
+.user-actions {
+	margin-top: 15px;
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.delete-button {
+	padding: 5px 10px;
+	background: #dc3545;
+	color: white;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.delete-button:hover {
+	background: #c82333;
+}
+
+.post-body {
+	line-height: 1.6;
+	margin-bottom: 15px;
+}
+
+.comment-body {
+	line-height: 1.5;
+	margin-bottom: 10px;
+}

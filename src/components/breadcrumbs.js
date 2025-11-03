@@ -1,25 +1,23 @@
 import { ComponentFactory } from '../utils/componentFactory.js'
+import { getBreadcrumbName } from '../utils/navigationMap.js'
 
 export function createBreadcrumbs() {
-	const routes = {
-		'#users': 'Пользователи',
-		'#users#todos': 'Задачи',
-		'#users#posts': 'Посты',
-		'#users#posts#comments': 'Комментарии',
-	}
-
 	const breadcrumbs = ComponentFactory.createElement('nav', {
 		className: 'breadcrumbs',
 	})
 
 	const updateBreadcrumbs = () => {
 		breadcrumbs.innerHTML = ''
-		const currentHash = window.location.hash
+		const currentHash = window.location.hash.slice(1)
 		const parts = currentHash.split('#').filter(part => part)
+
+		if (parts.length === 0) {
+			parts.push('users')
+		}
 
 		let path = ''
 		parts.forEach((part, index) => {
-			path += `#${part}`
+			path += path ? `#${part}` : part
 			const isLast = index === parts.length - 1
 
 			const crumb = ComponentFactory.createElement('span', {
@@ -30,17 +28,17 @@ export function createBreadcrumbs() {
 				const link = ComponentFactory.createElement(
 					'a',
 					{
-						href: path,
+						href: `#${path}`,
 						onClick: e => {
 							e.preventDefault()
 							window.location.hash = path
 						},
 					},
-					routes[path] || part
+					getBreadcrumbName(path)
 				)
 				crumb.appendChild(link)
 			} else {
-				crumb.textContent = routes[path] || part
+				crumb.textContent = getBreadcrumbName(path)
 			}
 
 			breadcrumbs.appendChild(crumb)
