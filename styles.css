@@ -332,3 +332,40 @@ body {
 	line-height: 1.5;
 	margin-bottom: 10px;
 }
+
+.todo-form-container {
+	background: white;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	margin-bottom: 20px;
+}
+
+.todo-form h4 {
+	margin-bottom: 15px;
+	color: #333;
+}
+
+.checkbox-container {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 15px;
+}
+
+.form-checkbox {
+	width: auto;
+}
+
+.add-todo-button {
+	padding: 5px 10px;
+	background: #17a2b8;
+	color: white;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.add-todo-button:hover {
+	background: #138496;
+}

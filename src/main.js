@@ -20,9 +20,9 @@ class SPAApplication {
 
 	setupRoutes() {
 		this.router.addRoute('users', createUsersComponent)
-		this.router.addRoute('todos', createTodosComponent)
-		this.router.addRoute('posts', createPostsComponent)
-		this.router.addRoute('comments', createCommentsComponent)
+		this.router.addRoute('users#todos', createTodosComponent)
+		this.router.addRoute('users#posts', createPostsComponent)
+		this.router.addRoute('users#posts#comments', createCommentsComponent)
 	}
 
 	renderLayout() {
@@ -49,7 +49,7 @@ class SPAApplication {
 		const todosLink = ComponentFactory.createElement(
 			'a',
 			{
-				href: '#todos',
+				href: '#users#todos',
 				className: 'nav-link',
 			},
 			'Задачи'
@@ -58,7 +58,7 @@ class SPAApplication {
 		const postsLink = ComponentFactory.createElement(
 			'a',
 			{
-				href: '#posts',
+				href: '#users#posts',
 				className: 'nav-link',
 			},
 			'Посты'
@@ -67,7 +67,7 @@ class SPAApplication {
 		const commentsLink = ComponentFactory.createElement(
 			'a',
 			{
-				href: '#comments',
+				href: '#users#posts#comments',
 				className: 'nav-link',
 			},
 			'Комментарии'
