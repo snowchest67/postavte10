@@ -99,26 +99,6 @@ export function createUsersComponent() {
 				className: 'user-actions',
 			})
 
-			const todosLink = ComponentFactory.createElement(
-				'button',
-				{
-					className: 'link-button',
-					onClick: () =>
-						(window.location.hash = `users#todos?userId=${user.id}`),
-				},
-				'Задачи'
-			)
-
-			const postsLink = ComponentFactory.createElement(
-				'button',
-				{
-					className: 'link-button',
-					onClick: () =>
-						(window.location.hash = `users#posts?userId=${user.id}`),
-				},
-				'Посты'
-			)
-
 			const addTodoButton = ComponentFactory.createElement(
 				'button',
 				{
@@ -140,8 +120,6 @@ export function createUsersComponent() {
 				actionsContainer.appendChild(deleteButton)
 			}
 
-			actionsContainer.appendChild(todosLink)
-			actionsContainer.appendChild(postsLink)
 			actionsContainer.appendChild(addTodoButton)
 
 			userCard.appendChild(userName)

@@ -16,6 +16,7 @@ class SPAApplication {
 		this.setupRoutes()
 		this.renderLayout()
 		this.router.init()
+		this.setupGlobalNavigation()
 	}
 
 	setupRoutes() {
@@ -23,6 +24,17 @@ class SPAApplication {
 		this.router.addRoute('users#todos', createTodosComponent)
 		this.router.addRoute('users#posts', createPostsComponent)
 		this.router.addRoute('users#posts#comments', createCommentsComponent)
+	}
+
+	setupGlobalNavigation() {
+		document.addEventListener('click', e => {
+			const link = e.target.closest('a[href^="#"]')
+			if (link) {
+				e.preventDefault()
+				const href = link.getAttribute('href')
+				this.router.navigate(href.slice(1))
+			}
+		})
 	}
 
 	renderLayout() {

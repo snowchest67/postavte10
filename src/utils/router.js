@@ -14,8 +14,9 @@ export class Router {
 
 	parseRoute(route) {
 		const parts = route.split('#').filter(part => part)
+		const path = parts.join('#')
 		const lastPart = parts[parts.length - 1] || ''
-		const [path, query] = lastPart.split('?')
+		const [lastPath, query] = lastPart.split('?')
 		const params = {}
 
 		if (query) {
@@ -25,7 +26,7 @@ export class Router {
 			})
 		}
 
-		return { path: parts.join('#'), params, parts }
+		return { path, params, parts }
 	}
 
 	addRoute(path, component) {
@@ -33,7 +34,9 @@ export class Router {
 	}
 
 	navigate(route) {
-		window.location.hash = route
+		if (route !== this.currentRoute) {
+			window.location.hash = route
+		}
 	}
 
 	async render() {
@@ -41,22 +44,36 @@ export class Router {
 			this.outlet = document.getElementById('router-outlet')
 		}
 
-		const { path, params, parts } = this.parseRoute(this.currentRoute)
+		const { path, params } = this.parseRoute(this.currentRoute)
 		const component = this.routes[path]
+
+		console.log('Rendering route:', path, 'Component exists:', !!component)
 
 		if (component && this.outlet) {
 			this.outlet.innerHTML = ''
-			const componentElement = await component(params, parts)
-			if (componentElement) {
-				this.outlet.appendChild(componentElement)
+			try {
+				const componentElement = await component(params)
+				if (componentElement) {
+					this.outlet.appendChild(componentElement)
+				}
+			} catch (error) {
+				console.error('Error rendering component:', error)
+				this.outlet.innerHTML = '<p>Ошибка загрузки компонента</p>'
 			}
 		} else {
-			this.navigate('users')
+			console.warn('Route not found:', path)
+
+			if (path !== 'users') {
+				this.navigate('users')
+			} else {
+				this.outlet.innerHTML = '<p>Страница не найдена</p>'
+			}
 		}
 	}
 
 	init() {
 		window.addEventListener('hashchange', () => {
+			console.log('Hash changed to:', window.location.hash)
 			this.currentRoute = this.getCurrentRoute()
 			this.render()
 		})

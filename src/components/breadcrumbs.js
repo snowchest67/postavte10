@@ -29,10 +29,6 @@ export function createBreadcrumbs() {
 					'a',
 					{
 						href: `#${path}`,
-						onClick: e => {
-							e.preventDefault()
-							window.location.hash = path
-						},
 					},
 					getBreadcrumbName(path)
 				)
