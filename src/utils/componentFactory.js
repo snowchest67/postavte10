@@ -27,46 +27,5 @@ export class ComponentFactory {
 		return element
 	}
 
-	static createRouter() {
-		return {
-			currentRoute: window.location.hash || '#users',
-			routes: {},
-			outlet: null,
-
-			addRoute(route, component) {
-				this.routes[route] = component
-			},
-
-			navigate(route) {
-				window.location.hash = route
-				this.currentRoute = route
-				this.render()
-			},
-
-			render() {
-				if (!this.outlet) {
-					this.outlet =
-						document.getElementById('router-outlet') ||
-						document.getElementById('app')
-				}
-
-				const component = this.routes[this.currentRoute]
-				if (component && this.outlet) {
-					this.outlet.innerHTML = ''
-					const componentElement = component()
-					if (componentElement) {
-						this.outlet.appendChild(componentElement)
-					}
-				}
-			},
-
-			init() {
-				window.addEventListener('hashchange', () => {
-					this.currentRoute = window.location.hash
-					this.render()
-				})
-				this.render()
-			},
-		}
-	}
+	
 }
